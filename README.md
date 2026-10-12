@@ -1,58 +1,151 @@
-# PhantomPen: Free-Hand Signature Authentication
-*Tartan Hackathon 2025 at Carnegie Mellon University.*
-PhantomPen is an innovative application that enables **signature authentication using hand gestures**. Users can draw their signature on-screen using their fingers, which serves as their biometric authentication method.
+# PhantomPen: Face and Free-Hand Signature Authentication
 
-## ✨ How It Works
-### 1.	Signature Collection:
-- Users first draw multiple samples of their signature.
-- This serves as the enrollment phase for authentication.
-### 2.	Authentication (Login):
-- The user enters their username.
-- They draw their signature on the screen.
-- A machine learning model verifies the signature.
-### 3.	Result:
-- ✅ Match found: Access granted.
-- ❌ Signature does not match: Authentication fails.
+PhantomPen is a **two-step biometric authentication system** that combines facial recognition with free-hand signature verification.
 
-## 🛠 Pre-requisites
-- Python 3.6 or higher
+Users first verify their identity through facial recognition. After passing the face verification step, they draw their signature in the air using hand gestures captured by a webcam. The system then compares the newly drawn signature with the enrolled signature to determine whether authentication succeeds.
 
-## 🚀 Installation
-Ensure you have conda installed. If not, install it from [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html).
+The project was originally developed at **TartanHacks 2025 at Carnegie Mellon University** and was later extended into a dual-verification system for the **5th Girls in Cyber Security (GiCS) Competition**, where it received **3rd Place**.
+
+## Key Features
+
+- Two-step biometric authentication using **facial recognition and signature verification**
+- Real-time hand and finger tracking with computer vision
+- Touch-free signature input using thumb-and-index-finger gestures
+- AI-based signature similarity matching
+- User authentication database for enrolled identities and signatures
+- Interactive GUI for username input and authentication results
+- Multiple signature visualization styles, including glow, neon blue, fire, and white
+
+## How It Works
+
+### 1. User Identification
+
+The user enters their username through the authentication interface.
+
+### 2. Facial Recognition
+
+The webcam captures the user's face and compares it with the enrolled facial data.
+
+- If face verification fails, authentication stops.
+- If face verification succeeds, the user proceeds to signature verification.
+
+### 3. Free-Hand Signature Input
+
+The user draws their signature in the air in front of the webcam.
+
+MediaPipe-based hand tracking detects the thumb and index finger. Bringing the two fingertips together starts drawing, while separating them stops the stroke.
+
+### 4. Signature Verification
+
+The captured signature is processed and compared with the user's enrolled signature using the trained signature verification model.
+
+### 5. Authentication Result
+
+Access is granted only after the required biometric verification steps succeed.
+
+## Technical Pipeline
+
+```text
+Username Input
+      |
+      v
+Facial Recognition
+      |
+      | verified
+      v
+Hand / Finger Tracking
+      |
+      v
+Free-Hand Signature Capture
+      |
+      v
+Signature Similarity Verification
+      |
+      v
+Authentication Result
 ```
+
+## Technologies
+
+- Python
+- OpenCV
+- MediaPipe
+- PyTorch
+- NumPy
+- Tkinter
+- Computer Vision
+- Siamese-network-based signature verification
+- Facial recognition
+
+## Installation
+
+Python 3.10 is recommended.
+
+```bash
 conda create -n PhantomPen python=3.10
 conda activate PhantomPen
 pip install -r requirements.txt
 ```
-### Note
-This project is tested on macOS. If you’re using Windows, you may experience GUI issues, but the core functionality will work fine.
 
-## ✍️ Signature Collection
-To collect signature samples, run:
-```
+The project was primarily tested on macOS. GUI or camera behavior may differ on Windows depending on the local environment.
+
+## Signature Enrollment
+
+To collect signature samples for a user:
+
+```bash
 python3 simple_draw.py --name <your_name> --style <style> -p
 ```
-- your_name: Your username
-- style: Choose from "glow", "neon_blue", or "fire"
-- -p: Enables the Phantom effect 🤩
 
-### How to Draw
-- Touch your thumb and index fingertips together: Start drawing ✏️
-- Separate your fingertips: Stop drawing
-- Press s: Save the signature
-- Press c: Clear the canvas
-- Press q: Quit
+Available styles:
 
-## 🔑 Signature Login
-To run the main script
-```
+- `glow`
+- `neon_blue`
+- `fire`
+- `white`
+
+The `-p` flag enables the Phantom visual effect.
+
+### Drawing Controls
+
+- Touch the thumb and index fingertips together: start drawing
+- Separate the fingertips: stop drawing
+- Press `s`: save the signature
+- Press `c`: clear the canvas
+- Press `q`: quit
+
+## Authentication
+
+Run the complete authentication pipeline with:
+
+```bash
 python3 main.py --style <style> -p
 ```
 
-Then follow the GUI prompts to authenticate your signature. 🖋️
+The application will:
 
-## 👨‍💻 Developers & Contributors
+1. Ask for the username.
+2. Perform facial verification.
+3. Allow the user to draw a signature after successful facial verification.
+4. Compare the captured signature with the enrolled signature.
+5. Display the authentication result through the GUI.
 
-Project created for Tartan Hackathon 2025 🏆 at Carnegie Mellon University.
+## Competition Achievement
 
-For questions or contributions, feel free to open an issue or submit a pull request! 🚀
+**3rd Place — 5th Girls in Cyber Security (GiCS) Competition**
+
+The competition version extended PhantomPen from free-hand signature authentication into a multi-biometric verification system by integrating facial recognition with the signature authentication pipeline.
+
+Project contributions included:
+
+- Developing the free-hand signature verification pipeline using computer-vision-based finger tracking and AI-based identity matching
+- Building and organizing the authentication database
+- Integrating facial recognition with the user verification interface and signature authentication workflow
+
+## Background
+
+PhantomPen was first created for **TartanHacks 2025 at Carnegie Mellon University** as a touch-free signature authentication prototype. The system was subsequently expanded to improve identity verification through an additional facial-recognition stage and used in the GiCS competition.
+
+## Developers & Contributors
+
+See the repository contributors and commit history for individual contributions.
